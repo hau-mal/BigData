@@ -1,0 +1,48 @@
+USE raw;
+
+DROP TABLE et_weather;
+
+CREATE EXTERNAL TABLE  et_weather (
+  coord STRUCT<lon:DOUBLE, lat:DOUBLE> COMMENT 'City geo location longitude and City geo location latitude',
+  sys STRUCT <type:INT, id:int, message:DOUBLE, country:STRING, sunrise:BIGINT, sunset:BIGINT> COMMENT'sys.type Internal parameter; sys.id Internal parameter; sys.message Internal parameter; sys.country Country code (GB, JP etc.); sys.sunrise Sunrise time, unix, UTC; sys.sunset Sunset time, unix, UTC',
+  weather STRUCT <id:INT, main:STRING, description:STRING, icon:STRING> COMMENT'(more info Weather condition codes)weather.id Weather condition id; weather.main Group of weather parameters (Rain, Snow, Extreme etc.); weather.description Weather condition within the group; weather.icon Weather icon id ',
+  main STRUCT<temp:DOUBLE>
+  visibility
+  wind STRUCT <> COMMENT' ',  
+  clouds STRUCT <> COMMENT' ', 
+  dt BIGINT,  
+  id BIGINT COMMENT 'City ID',
+  name STRING
+) 
+PARTITIONED BY (ingest_date string)
+ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe'
+LOCATION 'adl://hmaneadls.azuredatalakestore.net/tenant01/data/raw/external/weather' 
+COMMENT 'Current weather, see https://openweathermap.org/current for more details'
+;
+
+MSCK REPAIR TABLE et_weather;
+
+SELECT * FROM et_weather;
+
+/*
+Sample data:
+{
+"coord":{"lon":8.68,"lat":50.12},
+"sys":{"type":1,"id":4881,"message":0.1859,"country":"DE","sunrise":1491195340,"sunset":1491242510},
+"weather":[{"id":800,"main":"Clear","description":"Sky is Clear","icon":"01n"}],
+"main":{"temp":15.29,"pressure":1023,"humidity":50,"temp_min":14,"temp_max":16},
+"visibility":10000,
+"wind":{"speed":5.7,"deg":30},
+"clouds":{"all":0},
+"dt":1491247886,
+"id":2925533,
+"name":"Frankfurt am Main"
+}
+
+add a partition:
+ALTER TABLE et_weather ADD PARTITION(ingest_date='xxx')
+
+org
+MSCK REPAIR TABLE
+
+*/
