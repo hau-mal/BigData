@@ -1,0 +1,216 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+    "contentVersion": "0.9.0.0",
+    "parameters": {
+        "clusterName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the HDInsight cluster to create."
+            }
+        },
+        "clusterLoginUserName": {
+            "type": "string",
+            "defaultValue": "admin",
+            "metadata": {
+                "description": "These credentials can be used to submit jobs to the cluster and to log into cluster dashboards."
+            }
+        },
+        "clusterLoginPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "The password must be at least 10 characters in length and must contain at least one digit, one non-alphanumeric character, and one upper or lower case letter."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "northeurope",
+            "metadata": {
+                "description": "The location where all azure resources will be deployed."
+            }
+        },
+        "clusterVersion": {
+            "type": "string",
+            "defaultValue": "3.5",
+            "metadata": {
+                "description": "HDInsight cluster version."
+            }
+        },
+        "clusterWorkerNodeCount": {
+            "type": "int",
+            "defaultValue": 1,
+            "metadata": {
+                "description": "The number of nodes in the HDInsight cluster."
+            }
+        },
+        "clusterKind": {
+            "type": "string",
+            "defaultValue": "SPARK",
+            "metadata": {
+                "description": "The type of the HDInsight cluster to create."
+            }
+        },
+        "sshUserName": {
+            "type": "string",
+            "defaultValue": "sshuser",
+            "metadata": {
+                "description": "These credentials can be used to remotely access the cluster."
+            }
+        },
+        "sshPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "The password must be at least 10 characters in length and must contain at least one digit, one non-alphanumeric character, and one upper or lower case letter."
+            }
+        },
+        "hiveUserName": {
+            "type": "string",
+            "metadata": {
+                "description": "These credentials can be used to remotely access hive."
+            }
+        },
+        "hivePassword": {
+            "type": "securestring"
+        },
+        "oozieUserName": {
+            "type": "string",
+            "metadata": {
+                "description": "These credentials can be used to remotely access hive."
+            }
+        },
+        "ooziePassword": {
+            "type": "securestring"
+        },
+        "identityCertificate": {
+            "type": "securestring"
+        },
+        "identityCertificatePassword": {
+            "type": "securestring"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2015-03-01-preview",
+            "name": "[parameters('clusterName')]",
+            "type": "Microsoft.HDInsight/clusters",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "properties": {
+                "clusterVersion": "[parameters('clusterVersion')]",
+                "osType": "Linux",
+                "tier": "standard",
+                "clusterDefinition": {
+                    "kind": "[parameters('clusterKind')]",
+                    "componentVersion": {
+                        "Spark": "2.0"
+                    },
+                    "configurations": {
+                        "gateway": {
+                            "restAuthCredential.isEnabled": true,
+                            "restAuthCredential.username": "[parameters('clusterLoginUserName')]",
+                            "restAuthCredential.password": "[parameters('clusterLoginPassword')]"
+                        },
+                        "hive-site": {
+                            "javax.jdo.option.ConnectionDriverName": "com.microsoft.sqlserver.jdbc.SQLServerDriver",
+                            "javax.jdo.option.ConnectionURL": "jdbc:sqlserver://hmanemeta.database.windows.net;database=hive1;encrypt=true;trustServerCertificate=true;create=false;loginTimeout=300",
+                            "javax.jdo.option.ConnectionUserName": "[parameters('hiveUserName')]",
+                            "javax.jdo.option.ConnectionPassword": "[parameters('hivePassword')]",
+                            "hive.metastore.warehouse.dir": "adl://hmaneadls.azuredatalakestore.net/tenant01/hive"
+                        },
+                        "hive-env": {
+                            "hive_database": "Existing MSSQL Server database with SQL authentication",
+                            "hive_database_name": "hive1",
+                            "hive_database_type": "mssql",
+                            "hive_existing_mssql_server_database": "hive1",
+                            "hive_existing_mssql_server_host": "hmanemeta.database.windows.net",
+                            "hive_hostname": "hmanemeta.database.windows.net"
+                        },
+                        "oozie-site": {
+                            "oozie.service.JPAService.jdbc.driver": "com.microsoft.sqlserver.jdbc.SQLServerDriver",
+                            "oozie.service.JPAService.jdbc.url": "jdbc:sqlserver://hmanemeta.database.windows.net;database=hive1;encrypt=true;trustServerCertificate=true;create=false;loginTimeout=300",
+                            "oozie.service.JPAService.jdbc.username": "[parameters('oozieUserName')]",
+                            "oozie.service.JPAService.jdbc.password": "[parameters('ooziePassword')]",
+                            "oozie.db.schema.name": "oozie"
+                        },
+                        "oozie-env": {
+                            "oozie_database": "Existing MSSQL Server database with SQL authentication",
+                            "oozie_database_name": "hive1",
+                            "oozie_database_type": "mssql",
+                            "oozie_existing_mssql_server_database": "hive1",
+                            "oozie_existing_mssql_server_host": "hmanemeta.database.windows.net",
+                            "oozie_hostname": "hmanemeta.database.windows.net"
+                        },
+                        "clusterIdentity": {
+                            "clusterIdentity.applicationId": "f0a63a32-28c4-4ab4-a5e9-764508e76659",
+                            "clusterIdentity.certificate": "[parameters('identityCertificate')]",
+                            "clusterIdentity.aadTenantId": "https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47",
+                            "clusterIdentity.resourceUri": "https://management.core.windows.net/",
+                            "clusterIdentity.certificatePassword": "[parameters('identityCertificatePassword')]"
+                        }
+                    }
+                },
+                "storageProfile": {
+                    "storageaccounts": [
+                        {
+                            "name": "hmahdi.blob.core.windows.net",
+                            "isDefault": true,
+                            "container": "hmaspark1",
+                            "key": "[listKeys('/subscriptions/2336d5cb-61bb-40cd-80b1-2db7872960dc/resourceGroups/hmahdi/providers/Microsoft.Storage/storageAccounts/hmahdi', '2015-05-01-preview').key1]"
+                        }
+                    ]
+                },
+                "computeProfile": {
+                    "roles": [
+                        {
+                            "name": "headnode",
+                            "minInstanceCount": 1,
+                            "targetInstanceCount": 2,
+                            "hardwareProfile": {
+                                "vmSize": "Standard_D12_V2"
+                            },
+                            "osProfile": {
+                                "linuxOperatingSystemProfile": {
+                                    "username": "[parameters('sshUserName')]",
+                                    "password": "[parameters('sshPassword')]"
+                                }
+                            },
+                            "virtualNetworkProfile": null,
+                            "scriptActions": [
+                                {
+                                    "name": "hivejar",
+                                    "uri": "https://hdiconfigactions.blob.core.windows.net/linuxsetupcustomhivelibsv01/setup-customhivelibs-v01.sh",
+                                    "parameters": "wasbs://libs@hmahdi.blob.core.windows.net/",
+                                    "isHeadNode": true,
+                                    "isWorkerNode": true
+                                }
+                            ]
+                        },
+                        {
+                            "name": "workernode",
+                            "minInstanceCount": 1,
+                            "targetInstanceCount": 1,
+                            "hardwareProfile": {
+                                "vmSize": "Standard_D4_V2"
+                            },
+                            "osProfile": {
+                                "linuxOperatingSystemProfile": {
+                                    "username": "[parameters('sshUserName')]",
+                                    "password": "[parameters('sshPassword')]"
+                                }
+                            },
+                            "virtualNetworkProfile": null,
+                            "scriptActions": [
+                                {
+                                    "name": "hivejar",
+                                    "uri": "https://hdiconfigactions.blob.core.windows.net/linuxsetupcustomhivelibsv01/setup-customhivelibs-v01.sh",
+                                    "parameters": "wasbs://libs@hmahdi.blob.core.windows.net/",
+                                    "isHeadNode": true,
+                                    "isWorkerNode": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
