@@ -1,8 +1,8 @@
 
 {
-  "itemDisplayName": "",
-  "description": "",
-  "summary": "",
-  "githubUsername": "",
+  "itemDisplayName": "NiFi install",
+  "description": "NiFi",
+  "summary": "NiFi",
+  "githubUsername": "hau-mal",
   "dateUpdated": "2017-04-28"
 }
