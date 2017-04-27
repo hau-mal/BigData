@@ -24,7 +24,7 @@
             "value": "nifi-nsg"
         },
         "adminPassword": {
-            "value": "Nifi2017##"
+            "value": null
         },
         "storageAccountName": {
             "value": "nifidisks"
