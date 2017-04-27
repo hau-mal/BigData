@@ -24,16 +24,16 @@
             "value": "nifi-nsg"
         },
         "adminPassword": {
-            "value": "Nifi2017##"
+            "value": null
         },
         "storageAccountName": {
-            "value": "nifi-disks"
+            "value": "nifidisks"
         },
         "storageAccountType": {
             "value": "Standard_LRS"
         },
         "diagnosticsStorageAccountName": {
-            "value": "nifi-diag"
+            "value": "nifidiag"
         },
         "diagnosticsStorageAccountType": {
             "value": "Standard_LRS"
