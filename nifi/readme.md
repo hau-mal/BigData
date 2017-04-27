@@ -1,6 +1,6 @@
 # NiFi on Azure VM
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https://github.com/hau-mal/BigData/blob/master/nifi/azuredeploy.json" target="_blank">
+<a href="https://azuredeploy.net/" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
