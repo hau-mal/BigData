@@ -27,19 +27,19 @@
             "value": "Nifi2017##"
         },
         "storageAccountName": {
-            "value": "nifi-disks"
+            "value": "nifidisks"
         },
         "storageAccountType": {
             "value": "Standard_LRS"
         },
         "diagnosticsStorageAccountName": {
-            "value": "nifi-diag"
+            "value": "nifidiag"
         },
         "diagnosticsStorageAccountType": {
             "value": "Standard_LRS"
         },
         "diagnosticsStorageAccountId": {
-            "value": "Microsoft.Storage/storageAccounts/nifi-diag"
+            "value": "Microsoft.Storage/storageAccounts/nifidiag"
         },
         "addressPrefix": {
             "value": "10.0.0.0/24"
