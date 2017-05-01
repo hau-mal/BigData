@@ -12,7 +12,10 @@
         },
         "virtualMachineName": {
             "type": "string",
-            "defaultValue": "nifi"
+            "defaultValue": "nifi",
+	    "metadata": {
+               "description": "Name of the Virtual Machine."
+            }
         },
         "virtualMachineSize": {
             "type": "string",
@@ -135,7 +138,8 @@
     },
     "variables": {
         "vnetId": "[resourceId(parameters('resourceGroup'),'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]"
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
+	"rg": "[uniqueString(resourceGroup().id)]"
     },
     "resources": [
         {
