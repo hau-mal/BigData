@@ -69,7 +69,10 @@
         },
         "adminUsername": {
             "type": "string",
-            "defaultValue": "nifiadmin"
+            "defaultValue": "nifiadmin",
+	    "metadata": {
+               "description": "Username for the Virtual Machine."
+            }
         },
         "virtualNetworkName": {
             "type": "string",
