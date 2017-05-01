@@ -132,11 +132,11 @@
                     },
                     "fileUris": {
                         "value": [
-                            "https://iaasv2tempstorageam.blob.core.windows.net/vmextensionstemporary-10037ffe955c5ed4-20170427161939596/nifi-install.sh?sv=2015-04-05&sr=c&sig=rI0nfMEB%2BgOZBx3ga6s%2FLWCMF%2FTaBSXqhM82MN42BtQ%3D&se=2017-04-28T16%3A19%3A39Z&sp=rw"
+                            "https://raw.githubusercontent.com/hau-mal/BigData/master/sh/nifi-install.sh"
                         ]
                     },
                     "commandToExecute": {
-                        "value": "sudo sh nifi-install.sh"
+                        "value": "[concat('sh -x nifi-install.sh',' ',parameters('adminUsername'))]"
                     }
                 }
             },
