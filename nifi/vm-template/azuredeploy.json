@@ -2,7 +2,9 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "location": {
+        "resourceGroup": {
+            "type": "string"
+        },"location": {
             "type": "string"
         },
         "virtualMachineName": {
@@ -58,7 +60,7 @@
         }
     },
     "variables": {
-        "vnetId": "[resourceId('nifi-rg','Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+        "vnetId": "[resourceId(parameters('resourceGroup'),'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]"
     },
     "resources": [
@@ -91,7 +93,7 @@
                     "osDisk": {
                         "createOption": "fromImage",
                         "vhd": {
-                            "uri": "[concat(concat(reference(resourceId('nifi-rg', 'Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2015-06-15').primaryEndpoints['blob'], 'vhds/'), parameters('virtualMachineName'), '20170427182438.vhd')]"
+                            "uri": "[concat(concat(reference(resourceId(parameters('resourceGroup'), 'Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2015-06-15').primaryEndpoints['blob'], 'vhds/'), parameters('virtualMachineName'), '20170427182438.vhd')]"
                         },
                         "name": "[parameters('virtualMachineName')]"
                     },
@@ -107,7 +109,7 @@
                 "diagnosticsProfile": {
                     "bootDiagnostics": {
                         "enabled": true,
-                        "storageUri": "[reference(resourceId('nifi-rg', 'Microsoft.Storage/storageAccounts', parameters('diagnosticsStorageAccountName')), '2015-06-15').primaryEndpoints['blob']]"
+                        "storageUri": "[reference(resourceId(parameters('resourceGroup'), 'Microsoft.Storage/storageAccounts', parameters('diagnosticsStorageAccountName')), '2015-06-15').primaryEndpoints['blob']]"
                     }
                 }
             }
@@ -201,13 +203,13 @@
                             },
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIpAddress": {
-                                "id": "[resourceId('nifi-rg','Microsoft.Network/publicIpAddresses', parameters('publicIpAddressName'))]"
+                                "id": "[resourceId(parameters('resourceGroup'),'Microsoft.Network/publicIpAddresses', parameters('publicIpAddressName'))]"
                             }
                         }
                     }
                 ],
                 "networkSecurityGroup": {
-                    "id": "[resourceId('nifi-rg', 'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
+                    "id": "[resourceId(parameters('resourceGroup'), 'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
                 }
             }
         },
