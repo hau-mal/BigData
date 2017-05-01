@@ -30,11 +30,6 @@ echo "Installing maven package" >> install.progress.txt
 sudo apt-get -y install maven
 sudo /bin/date +%H:%M:%S >> install.progress.txt
 
-echo "Installing gradle package" >> install.progress.txt
-sudo apt-get -y install gradle
-sudo -u $5 /usr/bin/gradle
-sudo /bin/date +%H:%M:%S >> install.progress.txt
-
 echo "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" >> .bashrc
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
