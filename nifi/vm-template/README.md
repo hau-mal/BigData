@@ -12,3 +12,8 @@ Currently under construction
 
 ### Summary
 This template deploys NiFi on an Azure VM.
+
+
+Configure nsg to access NiFi via
+http://<ipaddress>:8080/nifi/
+
