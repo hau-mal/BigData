@@ -13,7 +13,6 @@ echo "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" >> .bashrc
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
 # Install Apache NiFi
-echo "Installing NiFi 1.1.2" >> install.progress.txt
 sudo mkdir /usr/bin/nifi
 cd /usr/bin/nifi
 sudo wget ftp://apache.mirrors.tds.net/pub/apache.org/nifi/1.1.2/nifi-1.1.2-bin.tar.gz
