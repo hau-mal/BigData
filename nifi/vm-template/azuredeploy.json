@@ -4,7 +4,7 @@
     "parameters": {
         "resourceGroup": {
             "type": "string",
-            "defaultValue": "nifi-rg"
+            "defaultValue": "[uniqueString(resourceGroup().id)]"
         },
         "location": {
             "type": "string",
