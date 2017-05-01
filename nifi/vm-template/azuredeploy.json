@@ -84,11 +84,8 @@
             "defaultValue": "nifi-nsg"
         },
         "adminPassword": {
-        "type": "securestring",
-        "metadata": {
-          "description": "Password for the Virtual Machine."
-           }
-	},
+        "type": "securestring"
+        },
         "storageAccountName": {
             "type": "string",
             "defaultValue": "nifidisks"
