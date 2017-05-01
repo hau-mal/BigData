@@ -76,7 +76,10 @@
         },
         "virtualNetworkName": {
             "type": "string",
-            "defaultValue": "nifi-vnet"
+            "defaultValue": "nifi-vnet",
+	    "metadata": {
+               "description": "Name for the Virtual Network."
+            }
         },
         "networkInterfaceName": {
             "type": "string",
