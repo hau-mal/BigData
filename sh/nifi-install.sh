@@ -1,6 +1,4 @@
 #!/bin/bash
-
-# Install Build Tools
 cd $HOME
 
 # Install Java
