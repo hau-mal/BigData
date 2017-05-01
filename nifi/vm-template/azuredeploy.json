@@ -114,7 +114,7 @@
         },
         "subnetName": {
             "type": "string",
-            "defaultValue": "nifiadmin"
+            "defaultValue": "nifi"
         },
         "subnetPrefix": {
             "type": "string",
