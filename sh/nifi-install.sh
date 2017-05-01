@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # Install Build Tools
+cd $HOME
+
 sudo /bin/date +%H:%M:%S > install.progress.txt
 
 echo "ooooo      FULL INSTALL      ooooo" >> install.progress.txt
