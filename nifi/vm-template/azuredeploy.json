@@ -2,11 +2,7 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "resourceGroup": {
-            "type": "string",
-            "defaultValue": "[uniqueString(resourceGroup().id)]"
-        },
-        "location": {
+         "location": {
             "type": "string",
             "defaultValue": "northeurope"
         },
@@ -86,14 +82,23 @@
         },
         "networkInterfaceName": {
             "type": "string",
-            "defaultValue": "nifi-ni"
+            "defaultValue": "nifi-ni",
+	    "metadata": {
+               "description": "Name for the Network Interface."
+            }
         },
         "networkSecurityGroupName": {
             "type": "string",
-            "defaultValue": "nifi-nsg"
+            "defaultValue": "nifi-nsg",
+	    "metadata": {
+               "description": "Name for the Network Sercurity Group. Inbound Security Rules have to be added after the deployment."
+            }
         },
         "adminPassword": {
-        "type": "securestring"
+        "type": "securestring",
+	"metadata": {
+               "description": "Administration Password."
+            }
         },
         "storageAccountName": {
             "type": "string",
@@ -137,9 +142,9 @@
         }
     },
     "variables": {
-        "vnetId": "[resourceId(parameters('resourceGroup'),'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
-	"rg": "[uniqueString(resourceGroup().id)]"
+        "rg": "[uniqueString(resourceGroup().id)]",
+	"vnetId": "[resourceId(variables('rg'),'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]"
     },
     "resources": [
         {
@@ -171,7 +176,7 @@
                     "osDisk": {
                         "createOption": "fromImage",
                         "vhd": {
-                            "uri": "[concat(concat(reference(resourceId(parameters('resourceGroup'), 'Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2015-06-15').primaryEndpoints['blob'], 'vhds/'), parameters('virtualMachineName'), '20170427182438.vhd')]"
+                            "uri": "[concat(concat(reference(resourceId(variables('rg'), 'Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2015-06-15').primaryEndpoints['blob'], 'vhds/'), parameters('virtualMachineName'), '20170427182438.vhd')]"
                         },
                         "name": "[parameters('virtualMachineName')]"
                     },
@@ -187,7 +192,7 @@
                 "diagnosticsProfile": {
                     "bootDiagnostics": {
                         "enabled": true,
-                        "storageUri": "[reference(resourceId(parameters('resourceGroup'), 'Microsoft.Storage/storageAccounts', parameters('diagnosticsStorageAccountName')), '2015-06-15').primaryEndpoints['blob']]"
+                        "storageUri": "[reference(resourceId(variables('rg'), 'Microsoft.Storage/storageAccounts', parameters('diagnosticsStorageAccountName')), '2015-06-15').primaryEndpoints['blob']]"
                     }
                 }
             }
@@ -281,13 +286,13 @@
                             },
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIpAddress": {
-                                "id": "[resourceId(parameters('resourceGroup'),'Microsoft.Network/publicIpAddresses', parameters('publicIpAddressName'))]"
+                                "id": "[resourceId(variables('rg'),'Microsoft.Network/publicIpAddresses', parameters('publicIpAddressName'))]"
                             }
                         }
                     }
                 ],
                 "networkSecurityGroup": {
-                    "id": "[resourceId(parameters('resourceGroup'), 'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
+                    "id": "[resourceId(variables('rg'), 'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
                 }
             }
         },
