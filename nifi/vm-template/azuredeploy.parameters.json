@@ -4,6 +4,7 @@
     "parameters": {
         "resourceGroup": {
             "value": "nifi-rg"
+		},
         "location": {
             "value": "northeurope"
         },
