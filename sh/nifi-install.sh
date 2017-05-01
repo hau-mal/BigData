@@ -5,15 +5,6 @@ sudo /bin/date +%H:%M:%S > /home/$5/install.progress.txt
 
 echo "ooooo      FULL INSTALL      ooooo" >> /home/$5/install.progress.txt
 
-echo "Installing build-essential package" >> /home/$5/install.progress.txt
-sudo apt-get -y install build-essential
-sudo /bin/date +%H:%M:%S >> /home/$5/install.progress.txt
-
-echo "Installing packaging-dev package" >> /home/$5/install.progress.txt
-sudo apt-get -y install packaging-dev
-sudo /bin/date +%H:%M:%S >> /home/$5/install.progress.txt
-
-
 # Install Java
 echo "Installing openjdk-8-jdk package" >> /home/$5/install.progress.txt
 
