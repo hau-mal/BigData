@@ -34,7 +34,7 @@ sudo -u $5 /usr/bin/gradle
 sudo /bin/date +%H:%M:%S >> /home/$5/install.progress.txt
 
 echo "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" >> /home/$5/.bashrc
-sudo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
 # Install Apache NiFi
 echo "Installing NiFi 1.1.2" >> /home/$5/install.progress.txt
