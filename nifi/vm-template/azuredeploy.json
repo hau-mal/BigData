@@ -7,10 +7,12 @@
             "defaultValue": "nifi-rg"
         },
         "location": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "northeurope"
         },
         "virtualMachineName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "nifi"
         },
         "virtualMachineSize": {
             "type": "string",
@@ -66,54 +68,71 @@
 	  "defaultValue": "Standard_DS1_v2"
         },
         "adminUsername": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "nifiadmin"
         },
         "virtualNetworkName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "nifi-vnet"
         },
         "networkInterfaceName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "nifi-ni"
         },
         "networkSecurityGroupName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "nifi-nsg"
         },
         "adminPassword": {
-            "type": "securestring"
+        "type": "securestring",
+        "metadata": {
+          "description": "Password for the Virtual Machine."
         },
         "storageAccountName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "nifidisks"
         },
         "storageAccountType": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "Standard_LRS"
         },
         "diagnosticsStorageAccountName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "nifidiag"
         },
         "diagnosticsStorageAccountId": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "Microsoft.Storage/storageAccounts/nifidiag"
         },
         "diagnosticsStorageAccountType": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "Standard_LRS"
         },
         "addressPrefix": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "nifiadmin"
         },
         "subnetName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "nifiadmin"
         },
         "subnetPrefix": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "10.0.0.0/24"
         },
         "publicIpAddressName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "nifi-ip"
         },
         "publicIpAddressType": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "Dynamic"
         }
     },
     "variables": {
         "vnetId": "[resourceId(parameters('resourceGroup'),'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]"
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
+	"rg": resourceGroup()    
     },
     "resources": [
         {
