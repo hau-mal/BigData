@@ -9,7 +9,7 @@
 
 
 ### Summary
-This template deploys NiFi on an Azure Ubuntu 16.04 VM. The main purpose is for evaluation and dev of Apache NiFi. It is a plain installation with no security or HA configurations. You should modify Source Address Variable to restrict inbound traffic. 
+This template deploys NiFi on an Azure Ubuntu 16.04 VM. The main purpose is for evaluation and dev of Apache NiFi. It is a plain installation with no security or HA configurations. You should modify Source Address Prefix Variable to restrict inbound traffic. 
 
 ### Packaging
 * build-essential
