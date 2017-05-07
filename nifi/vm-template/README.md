@@ -18,5 +18,5 @@ This template deploys NiFi on an Azure Ubuntu 16.04 VM. The main purpose is for 
 * Apache NiFi 1.1.2
 
 ### Post deployment tasks
-Configure the nsg to access NiFi via http://<ipaddress>:8080/nifi/
-Default port 8080 is used.
+You can access NiFi via http://<dnsname>:8080/nifi/ 
+Default port 8080 is used for this installation.
