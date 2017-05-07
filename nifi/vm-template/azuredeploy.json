@@ -1,329 +1,261 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "resourceGroup": {
-            "type": "string",
-            "defaultValue": "nifi-rg"
-        },
-        "location": {
-            "type": "string",
-            "defaultValue": "northeurope"
-        },
-        "virtualMachineName": {
-            "type": "string",
-            "defaultValue": "nifi"
-        },
-        "virtualMachineSize": {
-            "type": "string",
-            "metadata": {
-	    "description": "The size of the virtual machine used for the deployment"
-	  },
-	  "allowedValues": [
-		"Standard_A0",
-		"Standard_A1",
-		"Standard_A2",
-		"Standard_A3",
-		"Standard_A4",
-		"Basic_A0",
-		"Basic_A1",
-		"Basic_A2",
-		"Basic_A3",
-		"Basic_A4",
-		"Standard_A5",
-		"Standard_A6",
-		"Standard_A7",
-		"Standard_D1",
-		"Standard_D2",
-		"Standard_D3",
-		"Standard_D4",
-		"Standard_D11",
-		"Standard_D12",
-		"Standard_D13",
-		"Standard_D14",
-		"Standard_DS1_v2",
-		"Standard_DS2_v2",
-		"Standard_DS3_v2",
-		"Standard_DS4_v2",
-		"Standard_DS5_v2",
-		"Standard_DS11_v2",
-		"Standard_DS12_v2",
-		"Standard_DS13_v2",
-		"Standard_DS14_v2",
-		"Standard_G1",
-		"Standard_G2",
-		"Standard_G3",
-		"Standard_G4",
-		"Standard_G5",
-		"Standard_GS1",
-		"Standard_GS2",
-		"Standard_GS3",
-		"Standard_GS4",
-		"Standard_GS5",
-		"Standard_A8",
-		"Standard_A9",
-		"Standard_A10",
-		"Standard_A11"
-	  ],
-	  "defaultValue": "Standard_DS1_v2"
-        },
-        "adminUsername": {
-            "type": "string",
-            "defaultValue": "nifiadmin",
-	    "metadata": {
-               "description": "Username for the Virtual Machine."
-            }
-        },
-        "virtualNetworkName": {
-            "type": "string",
-            "defaultValue": "nifi-vnet",
-	    "metadata": {
-               "description": "Name for the Virtual Network."
-            }
-        },
-        "networkInterfaceName": {
-            "type": "string",
-            "defaultValue": "nifi-ni"
-        },
-        "networkSecurityGroupName": {
-            "type": "string",
-            "defaultValue": "nifi-nsg"
-        },
-        "adminPassword": {
-        "type": "securestring"
-        },
-        "storageAccountName": {
-            "type": "string",
-            "defaultValue": "nifidisks"
-        },
-        "storageAccountType": {
-            "type": "string",
-            "defaultValue": "Standard_LRS"
-        },
-        "diagnosticsStorageAccountName": {
-            "type": "string",
-            "defaultValue": "nifidiag"
-        },
-        "diagnosticsStorageAccountId": {
-            "type": "string",
-            "defaultValue": "Microsoft.Storage/storageAccounts/nifidiag"
-        },
-        "diagnosticsStorageAccountType": {
-            "type": "string",
-            "defaultValue": "Standard_LRS"
-        },
-        "addressPrefix": {
-            "type": "string",
-            "defaultValue": "10.0.0.0/24"
-        },
-        "subnetName": {
-            "type": "string",
-            "defaultValue": "nifi"
-        },
-        "subnetPrefix": {
-            "type": "string",
-            "defaultValue": "10.0.0.0/24"
-        },
-        "publicIpAddressName": {
-            "type": "string",
-            "defaultValue": "nifi-ip"
-        },
-        "publicIpAddressType": {
-            "type": "string",
-            "defaultValue": "Dynamic"
-        }
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vmSize": {
+      "type": "string",
+      "allowedValues": [
+        "Standard_A1",
+        "Standard_A2",
+        "Standard_A3",
+        "Standard_A4",
+        "Basic_A0",
+        "Basic_A1",
+        "Basic_A2",
+        "Basic_A3",
+        "Basic_A4",
+        "Standard_A5",
+        "Standard_A6",
+        "Standard_A7",
+        "Standard_D1",
+        "Standard_D2",
+        "Standard_D3",
+        "Standard_D4",
+        "Standard_D11",
+        "Standard_D12",
+        "Standard_D13",
+        "Standard_D14",
+        "Standard_DS1_v2",
+        "Standard_DS2_v2",
+        "Standard_DS3_v2",
+        "Standard_DS4_v2",
+        "Standard_DS5_v2",
+        "Standard_DS11_v2",
+        "Standard_DS12_v2",
+        "Standard_DS13_v2",
+        "Standard_DS14_v2",
+        "Standard_G1",
+        "Standard_G2",
+        "Standard_G3",
+        "Standard_G4",
+        "Standard_G5",
+        "Standard_GS1",
+        "Standard_GS2",
+        "Standard_GS3",
+        "Standard_GS4",
+        "Standard_GS5",
+        "Standard_A8",
+        "Standard_A9",
+        "Standard_A10",
+        "Standard_A11"
+      ],
+      "defaultValue": "Standard_DS1_v2",
+      "metadata": {
+        "description": "Size of vm"
+      }
     },
-    "variables": {
-        "vnetId": "[resourceId(parameters('resourceGroup'),'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]"
+    "username": {
+      "type": "string",
+      "defaultValue": "nifiadmin",
+      "metadata": {
+        "description": "Username for the Virtual Machine."
+      }
     },
-    "resources": [
-        {
-            "name": "[parameters('virtualMachineName')]",
-            "type": "Microsoft.Compute/virtualMachines",
-            "apiVersion": "2016-04-30-preview",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName'))]",
-                "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
-                "[concat('Microsoft.Storage/storageAccounts/', parameters('diagnosticsStorageAccountName'))]"
-            ],
-            "properties": {
-                "osProfile": {
-                    "computerName": "[parameters('virtualMachineName')]",
-                    "adminUsername": "[parameters('adminUsername')]",
-                    "adminPassword": "[parameters('adminPassword')]"
-                },
-                "hardwareProfile": {
-                    "vmSize": "[parameters('virtualMachineSize')]"
-                },
-                "storageProfile": {
-                    "imageReference": {
-                        "publisher": "Canonical",
-                        "offer": "UbuntuServer",
-                        "sku": "16.04-LTS",
-                        "version": "latest"
-                    },
-                    "osDisk": {
-                        "createOption": "fromImage",
-                        "vhd": {
-                            "uri": "[concat(concat(reference(resourceId(parameters('resourceGroup'), 'Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2015-06-15').primaryEndpoints['blob'], 'vhds/'), parameters('virtualMachineName'), '20170427182438.vhd')]"
-                        },
-                        "name": "[parameters('virtualMachineName')]"
-                    },
-                    "dataDisks": []
-                },
-                "networkProfile": {
-                    "networkInterfaces": [
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName'))]"
-                        }
-                    ]
-                },
-                "diagnosticsProfile": {
-                    "bootDiagnostics": {
-                        "enabled": true,
-                        "storageUri": "[reference(resourceId(parameters('resourceGroup'), 'Microsoft.Storage/storageAccounts', parameters('diagnosticsStorageAccountName')), '2015-06-15').primaryEndpoints['blob']]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "microsoft.custom-script-linux-20170427182404",
-            "apiVersion": "2015-01-01",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "incremental",
-                "templateLink": {
-                    "uri": "https://gallery.azure.com/artifact/20161101/microsoft.custom-script-linux-arm.2.0.50/Artifacts/MainTemplate.json"
-                },
-                "parameters": {
-                    "vmName": {
-                        "value": "nifi"
-                    },
-                    "location": {
-                        "value": "northeurope"
-                    },
-                    "fileUris": {
-                        "value": [
-                            "https://raw.githubusercontent.com/hau-mal/BigData/master/sh/nifi-install.sh"
-                        ]
-                    },
-                    "commandToExecute": {
-                        "value": "[concat('sh -x nifi-install.sh',' ',parameters('adminUsername'))]"
-                    }
-                }
+    "password": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for the Virtual Machine."
+      }
+    },
+    "SourceAddressPrefix": {
+      "type": "string",
+      "defaultValue": "*",
+      "metadata": {
+        "description": "Source address prefix for network security group."
+      }
+    },
+             "dnsNameForPublicIP": {
+              "type": "string",
+              "defaultValue": "nifi",
+              "metadata": {
+                "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
+              }
+             }
             },
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
-            ]
+        "variables": {
+          "extensionName": "CustomScript",
+          "scenarioPrefix": "NiFi1",
+          "apiVersion": "2015-05-01-preview",
+          "imagePublisher": "Canonical",
+          "imageOffer": "UbuntuServer",
+          "ubuntuOSVersion": "16.04-LTS",
+          "OSDiskName": "[concat(variables('scenarioPrefix'),'OSDisk')]",
+          "nicName": "[concat(variables('scenarioPrefix'),'Nic')]",
+          "vnetAddressPrefix": "10.0.0.0/16",
+          "networkSecurityGroupName": "nifi-nsg",
+          "subnetName": "[concat(variables('scenarioPrefix'),'Subnet')]",
+          "subnetPrefix": "10.0.0.0/24",
+          "storageAccountType": "Standard_LRS",
+          "publicIPAddressName": "[concat(variables('scenarioPrefix'),'PublicIp')]",
+          "publicIPAddressType": "Dynamic",
+          "vmStorageAccountContainerName": "vhds",
+          "vmName": "[variables('scenarioPrefix')]",
+          "virtualNetworkName": "[concat(variables('scenarioPrefix'),'Vnet')]",
+          "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
+          "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]"
         },
-        {
-            "name": "[parameters('storageAccountName')]",
-            "type": "Microsoft.Storage/storageAccounts",
-            "apiVersion": "2015-06-15",
-            "location": "[parameters('location')]",
-            "properties": {
-                "accountType": "[parameters('storageAccountType')]"
-            }
-        },
-        {
-            "name": "[parameters('diagnosticsStorageAccountName')]",
-            "type": "Microsoft.Storage/storageAccounts",
-            "apiVersion": "2015-06-15",
-            "location": "[parameters('location')]",
-            "properties": {
-                "accountType": "[parameters('diagnosticsStorageAccountType')]"
-            }
-        },
-        {
-            "name": "[parameters('virtualNetworkName')]",
-            "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2016-12-01",
-            "location": "[parameters('location')]",
-            "properties": {
-                "addressSpace": {
-                    "addressPrefixes": [
-                        "[parameters('addressPrefix')]"
-                    ]
-                },
-                "subnets": [
-                    {
-                        "name": "[parameters('subnetName')]",
-                        "properties": {
-                            "addressPrefix": "[parameters('subnetPrefix')]"
-                        }
-                    }
-                ]
-            }
-        },
-        {
-            "name": "[parameters('networkInterfaceName')]",
-            "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2016-09-01",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
-                "[concat('Microsoft.Network/publicIpAddresses/', parameters('publicIpAddressName'))]",
-                "[concat('Microsoft.Network/networkSecurityGroups/', parameters('networkSecurityGroupName'))]"
-            ],
-            "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "properties": {
-                            "subnet": {
-                                "id": "[variables('subnetRef')]"
-                            },
-                            "privateIPAllocationMethod": "Dynamic",
-                            "publicIpAddress": {
-                                "id": "[resourceId(parameters('resourceGroup'),'Microsoft.Network/publicIpAddresses', parameters('publicIpAddressName'))]"
-                            }
-                        }
-                    }
-                ],
-                "networkSecurityGroup": {
-                    "id": "[resourceId(parameters('resourceGroup'), 'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
-                }
-            }
-        },
-        {
-            "name": "[parameters('publicIpAddressName')]",
-            "type": "Microsoft.Network/publicIpAddresses",
-            "apiVersion": "2016-09-01",
-            "location": "[parameters('location')]",
-            "properties": {
-                "publicIpAllocationMethod": "[parameters('publicIpAddressType')]"
-            }
-        },
-        {
-            "name": "[parameters('networkSecurityGroupName')]",
-            "type": "Microsoft.Network/networkSecurityGroups",
-            "apiVersion": "2016-09-01",
-            "location": "[parameters('location')]",
-            "properties": {
-                "securityRules": [
-                    {
-                        "name": "default-allow-ssh",
-                        "properties": {
-                            "priority": 1000,
-                            "sourceAddressPrefix": "*",
-                            "protocol": "TCP",
-                            "destinationPortRange": "22",
-                            "access": "Allow",
-                            "direction": "Inbound",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*"
-                        }
-                    }
-                ]
-            }
+  "resources": [
+    {
+      "apiVersion": "[variables('apiVersion')]",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('publicIPAddressName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
+        "dnsSettings": {
+          "domainNameLabel": "[parameters('dnsNameForPublicIP')]"
         }
-    ],
-    "outputs": {
-        "adminUsername": {
-            "type": "string",
-            "value": "[parameters('adminUsername')]"
+      }
+    },
+    {
+      "apiVersion": "[variables('apiVersion')]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[variables('virtualNetworkName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('vnetAddressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('subnetName')]",
+            "properties": {
+              "addressPrefix": "[variables('subnetPrefix')]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "[variables('apiVersion')]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('nicName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
+        "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+              },
+              "subnet": {
+                "id": "[variables('subnetRef')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2016-04-30-preview",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[variables('vmName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[variables('vmName')]",
+          "adminUsername": "[parameters('username')]",
+          "adminPassword": "[parameters('password')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[variables('imagePublisher')]",
+            "offer": "[variables('imageOffer')]",
+            "sku": "[variables('ubuntuOSVersion')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+            }
+          ]
         }
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(variables('vmName'),'/installcustomscript')]",
+      "apiVersion": "[variables('apiVersion')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [ "https://raw.githubusercontent.com/hau-mal/BigData/master/sh/nifi-install.sh" ],
+          "commandToExecute": "[concat('sh -x nifi-install.sh', ' ',parameters('username'))]"
+        }
+      }
+    },
+    {
+      "name": "[variables('networkSecurityGroupName')]",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2016-09-01",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "default-allow-ssh",
+            "properties": {
+              "priority": 1000,
+              "sourceAddressPrefix": "[parameters('SourceAddressPrefix')]",
+              "protocol": "TCP",
+              "destinationPortRange": "22",
+              "access": "Allow",
+              "direction": "Inbound",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*"
+            }
+          },
+          {
+            "name": "nifi_in",
+            "properties": {
+              "protocol": "TCP",
+              "sourcePortRange": "*",
+              "destinationPortRange": "8080",
+              "sourceAddressPrefix": "[parameters('SourceAddressPrefix')]",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 1010,
+              "direction": "Inbound"
+            }
+          }
+        ]
+      }
     }
+  ]
 }
