@@ -219,7 +219,7 @@
         "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": true,
         "settings": {
-          "fileUris": [ "https://raw.githubusercontent.com/hau-mal/BigData/master/sh/nifi-install.sh" ],
+          "fileUris": [ "https://raw.githubusercontent.com/hau-mal/BigData/master/nifi/vm-template/scripts/nifi-install.sh" ],
           "commandToExecute": "[concat('sh -x nifi-install.sh', ' ',parameters('username'))]"
         }
       }
