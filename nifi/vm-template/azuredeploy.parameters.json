@@ -15,7 +15,7 @@
       "value": "*"
     },
     "dnsNameForPublicIP": {
-      "value": "nifi"
+      "value": "GEN-UNIQUE-13"
     }
   }
 }
