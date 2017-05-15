@@ -5,8 +5,9 @@
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fhau-mal%2FBigData%2Fmaster%2Fnifi%2Fvm-template%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
-
-
+<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fhau-mal%2FBigData%2Fmaster%2Fnifi%2Fvm-template%2Fazuredeploy.json" target="_blank">
+    <img src="http://armviz.io/visualizebutton.png"/>
+</a>
 ### Summary
 Apache NiFi is a visual flow-based environment designed for streaming data pipelines, enterprise application integration and more scenarios for data integration. Apache NiFi's visual management interface provides a friendly and rapid way to develop, monitor, and troubleshoot data flows.
 
