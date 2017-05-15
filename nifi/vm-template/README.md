@@ -27,6 +27,7 @@ Default port 8080 is used for this installation.
 
 ### Resources
 [Apache NiFi Homepage](https://nifi.apache.org/)
+
 [Apache NiFi Documentation](https://nifi.apache.org/docs.html)
 
 Apache NiFi is licensed under the Apache License, Version 2.0. Apache, the Apache feather logo, NiFi, Apache NiFi and the project logo are trademarks of The Apache Software Foundation.
