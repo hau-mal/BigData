@@ -14,11 +14,11 @@ Apache NiFi is a visual flow-based environment designed for streaming data pipel
 
 Apache NiFi's data provenance tools allow detailed inspection and verification of all touchpoints with data flowing through the system for compliance, debugging, and performance analysis.
 
-This template deploys Apache NiFi 1.1.2 on an Azure Ubuntu 16.04 VM. The main purpose is for evaluation and dev of Apache NiFi. It is a plain installation with no security or HA configurations. You should modify Source Address Prefix Variable to restrict inbound traffic. 
+This template deploys Apache NiFi 1.3.0 on an Azure Ubuntu 16.04 VM. The main purpose is for evaluation and dev of Apache NiFi. It is a plain installation with no security or HA configurations. You should modify Source Address Prefix Variable to restrict inbound traffic. 
 
 ### Packaging
 * Java Open JDK 8
-* Apache NiFi 1.1.2
+* Apache NiFi 1.3.0
 
 ### Post deployment tasks
 After the deployment has finished you can access NiFi via http://yourdnsname:8080/nifi/ 
