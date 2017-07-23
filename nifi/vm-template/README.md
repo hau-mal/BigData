@@ -2,10 +2,10 @@
 
 
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fhau-mal%2FBigData%2Fmaster%2Fnifi%2Fvm-template%2Fazuredeploy.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fnifi-on-ubuntu%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
-<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fhau-mal%2FBigData%2Fmaster%2Fnifi%2Fvm-template%2Fazuredeploy.json" target="_blank">
+<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fnifi-on-ubuntu%2Fazuredeploy.json" target="_blank">
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
@@ -29,4 +29,4 @@ Default port 8080 is used for this installation.
 * [Apache NiFi Homepage](https://nifi.apache.org/)
 * [Apache NiFi Documentation](https://nifi.apache.org/docs.html)
 
-Apache NiFi is licensed under the Apache License, Version 2.0. Apache, the Apache feather logo, NiFi, Apache NiFi and the project logo are trademarks of The Apache Software Foundation.
+Apache NiFi is licensed under the Apache License, Version 2.0.
