@@ -1,9 +1,5 @@
-# Install Build Tools
-sudo /bin/date +%H:%M:%S > /home/$1/install.progress.txt
-
-echo "ooooo      FULL INSTALL      ooooo" >> /home/$1/install.progress.txt
-
 # Install Java
+sudo /bin/date +%H:%M:%S > /home/$1/install.progress.txt
 echo "Installing openjdk-8-jdk package" >> /home/$1/install.progress.txt
 
 sudo add-apt-repository -y ppa:openjdk-r/ppa
@@ -21,8 +17,8 @@ sudo /bin/date +%H:%M:%S >> /home/$1/install.progress.txt
 echo "Installing NiFi 1.1.2" >> /home/$1/install.progress.txt
 sudo mkdir /usr/bin/nifi
 cd /usr/bin/nifi
-sudo wget ftp://apache.mirrors.tds.net/pub/apache.org/nifi/1.1.2/nifi-1.1.2-bin.tar.gz
-sudo tar -xzf nifi-1.1.2-bin.tar.gz
+sudo wget ftp://apache.mirrors.tds.net/pub/apache.org/nifi/1.3.0/nifi-1.3.0-bin.tar.gz
+sudo tar -xzf nifi-1.3.0-bin.tar.gz
 sudo /usr/bin/nifi/nifi-1.1.2/bin/nifi.sh install dataflow
 sudo /usr/bin/nifi/nifi-1.1.2/bin/nifi.sh start 
 # Increase the number of TCP socket ports available
