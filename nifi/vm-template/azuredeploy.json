@@ -93,7 +93,7 @@
     "nicName": "[concat(variables('scenarioPrefix'),'Nic')]",
     "vnetAddressPrefix": "10.0.0.0/16",
     "networkSecurityGroupName": "[concat(variables('scenarioPrefix'),'-nsg')]",
-    "subnetName": "[concat(variables('scenarioPrefix'),'-subnet')]",
+    "subnetName": "[concat(variables('scenarioPrefix'),'Subnet')]",
     "subnetPrefix": "10.0.0.0/24",
     "storageAccountType": "Standard_LRS",
     "publicIPAddressName": "[concat(variables('scenarioPrefix'),'PublicIp')]",
