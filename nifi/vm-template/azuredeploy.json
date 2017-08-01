@@ -100,7 +100,7 @@
     "publicIPAddressType": "Dynamic",
     "vmStorageAccountContainerName": "vhds",
     "vmName": "[variables('scenarioPrefix')]",
-    "virtualNetworkName": "[concat(variables('scenarioPrefix'),'Vnet')]",
+    "virtualNetworkName": "[concat(variables('scenarioPrefix'),'-vnet')]",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]"
   },
