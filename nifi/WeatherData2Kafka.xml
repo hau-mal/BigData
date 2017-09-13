@@ -1,0 +1,400 @@
+<?xml version="1.0" ?>
+<template encoding-version="1.1">
+  <description>Get Data via HTTP call, split JSON file into single 
+messages and send data to HDInsight Kafka </description>
+  <groupId>a2885220-015d-1000-7c50-78a49dc5c17a</groupId>
+  <name>WeatherData2Kafka</name>
+  <snippet>
+    <processors>
+      <id>bf376f30-aa65-34dd-0000-000000000000</id>
+      <parentGroupId>d1b074d3-dc0d-3adf-0000-000000000000</parentGroupId>
+      <position>
+        <x>458.04144287109375</x>
+        <y>0.5975418090820312</y>
+      </position>
+      <bundle>
+        <artifact>nifi-standard-nar</artifact>
+        <group>org.apache.nifi</group>
+        <version>1.3.0</version>
+      </bundle>
+      <config>
+        <bulletinLevel>WARN</bulletinLevel>
+        <comments></comments>
+        <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+        <descriptors>
+          <entry>
+            <key>JsonPath Expression</key>
+            <value>
+              <name>JsonPath Expression</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Null Value Representation</key>
+            <value>
+              <name>Null Value Representation</name>
+            </value>
+          </entry>
+        </descriptors>
+        <executionNode>ALL</executionNode>
+        <lossTolerant>false</lossTolerant>
+        <penaltyDuration>30 sec</penaltyDuration>
+        <properties>
+          <entry>
+            <key>JsonPath Expression</key>
+            <value>$.list</value>
+          </entry>
+          <entry>
+            <key>Null Value Representation</key>
+            <value>empty string</value>
+          </entry>
+        </properties>
+        <runDurationMillis>0</runDurationMillis>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <yieldDuration>1 sec</yieldDuration>
+      </config>
+      <name>SplitJson</name>
+      <relationships>
+        <autoTerminate>true</autoTerminate>
+        <name>failure</name>
+      </relationships>
+      <relationships>
+        <autoTerminate>true</autoTerminate>
+        <name>original</name>
+      </relationships>
+      <relationships>
+        <autoTerminate>false</autoTerminate>
+        <name>split</name>
+      </relationships>
+      <style></style>
+      <type>org.apache.nifi.processors.standard.SplitJson</type>
+    </processors>
+    <processors>
+      <id>d9a6a7a8-7580-3d5e-0000-000000000000</id>
+      <parentGroupId>d1b074d3-dc0d-3adf-0000-000000000000</parentGroupId>
+      <position>
+        <x>921.7802734375</x>
+        <y>0.5975341796875</y>
+      </position>
+      <bundle>
+        <artifact>nifi-kafka-0-8-nar</artifact>
+        <group>org.apache.nifi</group>
+        <version>1.3.0</version>
+      </bundle>
+      <config>
+        <bulletinLevel>WARN</bulletinLevel>
+        <comments></comments>
+        <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+        <descriptors>
+          <entry>
+            <key>Known Brokers</key>
+            <value>
+              <name>Known Brokers</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Topic Name</key>
+            <value>
+              <name>Topic Name</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Partition</key>
+            <value>
+              <name>Partition</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Kafka Key</key>
+            <value>
+              <name>Kafka Key</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Delivery Guarantee</key>
+            <value>
+              <name>Delivery Guarantee</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Message Delimiter</key>
+            <value>
+              <name>Message Delimiter</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Max Buffer Size</key>
+            <value>
+              <name>Max Buffer Size</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Max Record Size</key>
+            <value>
+              <name>Max Record Size</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Communications Timeout</key>
+            <value>
+              <name>Communications Timeout</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Async Batch Size</key>
+            <value>
+              <name>Async Batch Size</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Queue Buffering Max Time</key>
+            <value>
+              <name>Queue Buffering Max Time</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Compression Codec</key>
+            <value>
+              <name>Compression Codec</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Client Name</key>
+            <value>
+              <name>Client Name</name>
+            </value>
+          </entry>
+        </descriptors>
+        <executionNode>ALL</executionNode>
+        <lossTolerant>false</lossTolerant>
+        <penaltyDuration>30 sec</penaltyDuration>
+        <properties>
+          <entry>
+            <key>Known Brokers</key>
+            <value>wn0-kafka.ip4ml44kkcfuhg50v5e0j0qhvd.fx.internal.cloudapp.net:9092,wn1-kafka.ip4ml44kkcfuhg50v5e0j0qhvd.fx.internal.cloudapp.net:9092,wn2-kafka.ip4ml44kkcfuhg50v5e0j0qhvd.fx.internal.cloudapp.net:9092</value>
+          </entry>
+          <entry>
+            <key>Topic Name</key>
+            <value>weather</value>
+          </entry>
+          <entry>
+            <key>Partition</key>
+          </entry>
+          <entry>
+            <key>Kafka Key</key>
+          </entry>
+          <entry>
+            <key>Delivery Guarantee</key>
+            <value>0</value>
+          </entry>
+          <entry>
+            <key>Message Delimiter</key>
+          </entry>
+          <entry>
+            <key>Max Buffer Size</key>
+            <value>5 MB</value>
+          </entry>
+          <entry>
+            <key>Max Record Size</key>
+            <value>1 MB</value>
+          </entry>
+          <entry>
+            <key>Communications Timeout</key>
+            <value>30 secs</value>
+          </entry>
+          <entry>
+            <key>Async Batch Size</key>
+            <value>16384</value>
+          </entry>
+          <entry>
+            <key>Queue Buffering Max Time</key>
+          </entry>
+          <entry>
+            <key>Compression Codec</key>
+            <value>none</value>
+          </entry>
+          <entry>
+            <key>Client Name</key>
+            <value>nifi</value>
+          </entry>
+        </properties>
+        <runDurationMillis>0</runDurationMillis>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <yieldDuration>1 sec</yieldDuration>
+      </config>
+      <name>PutKafka</name>
+      <relationships>
+        <autoTerminate>true</autoTerminate>
+        <name>failure</name>
+      </relationships>
+      <relationships>
+        <autoTerminate>true</autoTerminate>
+        <name>success</name>
+      </relationships>
+      <style></style>
+      <type>org.apache.nifi.processors.kafka.PutKafka</type>
+    </processors>
+    <processors>
+      <id>5d127f20-d9eb-3cbe-0000-000000000000</id>
+      <parentGroupId>d1b074d3-dc0d-3adf-0000-000000000000</parentGroupId>
+      <position>
+        <x>0.0</x>
+        <y>0.0</y>
+      </position>
+      <bundle>
+        <artifact>nifi-standard-nar</artifact>
+        <group>org.apache.nifi</group>
+        <version>1.3.0</version>
+      </bundle>
+      <config>
+        <bulletinLevel>WARN</bulletinLevel>
+        <comments></comments>
+        <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+        <descriptors>
+          <entry>
+            <key>URL</key>
+            <value>
+              <name>URL</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Filename</key>
+            <value>
+              <name>Filename</name>
+            </value>
+          </entry>
+          <entry>
+            <key>SSL Context Service</key>
+            <value>
+              <identifiesControllerService>org.apache.nifi.ssl.SSLContextService</identifiesControllerService>
+              <name>SSL Context Service</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Username</key>
+            <value>
+              <name>Username</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Password</key>
+            <value>
+              <name>Password</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Connection Timeout</key>
+            <value>
+              <name>Connection Timeout</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Data Timeout</key>
+            <value>
+              <name>Data Timeout</name>
+            </value>
+          </entry>
+          <entry>
+            <key>User Agent</key>
+            <value>
+              <name>User Agent</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Accept Content-Type</key>
+            <value>
+              <name>Accept Content-Type</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Follow Redirects</key>
+            <value>
+              <name>Follow Redirects</name>
+            </value>
+          </entry>
+          <entry>
+            <key>redirect-cookie-policy</key>
+            <value>
+              <name>redirect-cookie-policy</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Proxy Host</key>
+            <value>
+              <name>Proxy Host</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Proxy Port</key>
+            <value>
+              <name>Proxy Port</name>
+            </value>
+          </entry>
+        </descriptors>
+        <executionNode>ALL</executionNode>
+        <lossTolerant>false</lossTolerant>
+        <penaltyDuration>30 sec</penaltyDuration>
+        <properties>
+          <entry>
+            <key>URL</key>
+            <value>http://api.openweathermap.org/data/2.5/group?id=2925533,2861632,3042068,6553024,2896483,6691073,6940463,2843196,2836809,3526953,3448632,1808090,1818211,1857654,4989005,5809844,2911297,2873974,2950159,2806655&amp;units=metric&amp;lang=en&amp;appid=</value>
+          </entry>
+          <entry>
+            <key>Filename</key>
+            <value>currentweather</value>
+          </entry>
+          <entry>
+            <key>SSL Context Service</key>
+          </entry>
+          <entry>
+            <key>Username</key>
+          </entry>
+          <entry>
+            <key>Password</key>
+          </entry>
+          <entry>
+            <key>Connection Timeout</key>
+            <value>30 sec</value>
+          </entry>
+          <entry>
+            <key>Data Timeout</key>
+            <value>30 sec</value>
+          </entry>
+          <entry>
+            <key>User Agent</key>
+          </entry>
+          <entry>
+            <key>Accept Content-Type</key>
+          </entry>
+          <entry>
+            <key>Follow Redirects</key>
+            <value>false</value>
+          </entry>
+          <entry>
+            <key>redirect-cookie-policy</key>
+            <value>default</value>
+          </entry>
+          <entry>
+            <key>Proxy Host</key>
+          </entry>
+          <entry>
+            <key>Proxy Port</key>
+          </entry>
+        </properties>
+        <runDurationMillis>0</runDurationMillis>
+        <schedulingPeriod>1 min</schedulingPeriod>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <yieldDuration>1 sec</yieldDuration>
+      </config>
+      <name>GetHTTP</name>
+      <relationships>
+        <autoTerminate>false</autoTerminate>
+        <name>success</name>
+      </relationships>
+      <style></style>
+      <type>org.apache.nifi.processors.standard.GetHTTP</type>
+    </processors>
+  </snippet>
+  <timestamp>09/13/2017 10:13:21 UTC</timestamp>
+</template>
